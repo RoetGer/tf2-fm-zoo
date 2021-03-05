@@ -1,5 +1,5 @@
 import tensorflow as tf
-from common import LinearModel, EmbedFeatures
+from fm_zoo.common import LinearModel, EmbedFeatures
 
 
 class AttentionalFactorizationMachine(tf.keras.Model):

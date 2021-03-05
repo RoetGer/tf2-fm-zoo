@@ -1,5 +1,5 @@
 import tensorflow as tf
-from common import LinearModel, EmbedFeatures, FullyConnectedNetwork
+from fm_zoo.common import LinearModel, EmbedFeatures, FullyConnectedNetwork
 
 
 class NeuralFactorizationMachine(tf.keras.Model):

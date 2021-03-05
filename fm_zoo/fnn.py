@@ -1,5 +1,5 @@
 import tensorflow as tf
-from common import EmbedFeatures, FullyConnectedNetwork
+from fm_zoo.common import EmbedFeatures, FullyConnectedNetwork
 
 
 class FMNeuralNetwork(tf.keras.Model):

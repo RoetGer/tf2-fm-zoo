@@ -1,5 +1,5 @@
 import tensorflow as tf
-from common import EmbedFeatures, FullyConnectedNetwork, LinearModel, MultiHeadAttention
+from fm_zoo.common import EmbedFeatures, FullyConnectedNetwork, LinearModel, MultiHeadAttention
 
 
 class AutomaticFeatureInteraction(tf.keras.Model):

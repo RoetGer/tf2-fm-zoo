@@ -1,5 +1,5 @@
 import tensorflow as tf
-from common import LinearModel, FieldAwareEmbedFeatures
+from fm_zoo.common import LinearModel, FieldAwareEmbedFeatures
 
 
 class FieldAwareFactorizationMachine(tf.keras.Model):

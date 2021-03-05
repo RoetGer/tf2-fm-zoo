@@ -1,5 +1,5 @@
 import tensorflow as tf
-from common import EmbedFeatures, FullyConnectedNetwork, LinearModel
+from fm_zoo.common import EmbedFeatures, FullyConnectedNetwork, LinearModel
 
 
 class DeepFM(tf.keras.Model):
