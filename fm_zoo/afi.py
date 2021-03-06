@@ -39,15 +39,3 @@ class AutomaticFeatureInteraction(tf.keras.Model):
         cross_term = self.flatten(tf.nn.relu(cross_term))
         attn_out = self.attn_out(cross_term)
         return linear_out + fnn_out + attn_out
-
-
-def _test_afi():
-    x = tf.convert_to_tensor([[1, 2, 2, 1, 5], [0, 3, 2, 2, 4], [2, 2, 2, 1, 1]])
-    m = AutomaticFeatureInteraction([3, 4, 5, 4, 6], 4, 2, 2, [5, 3, 1], .1)
-    o = m(x)
-    print(o.shape)
-    assert o.shape == (3, 1)
-
-
-if __name__ == '__main__':
-    _test_afi()

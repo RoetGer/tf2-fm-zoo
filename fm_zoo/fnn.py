@@ -19,14 +19,3 @@ class FMNeuralNetwork(tf.keras.Model):
     def call(self, x, training=False):
         features = self.flatten(self.embedding(x))
         return self.nn(features, training=training)
-
-
-def _test_fnn():
-    x = [[1, 2, 2], [0, 3, 2]]
-    m = FMNeuralNetwork([3, 4, 5], 2, [5, 3, 1], .1)
-    o = m(x)
-    assert o.shape == (2, 1)
-
-
-if __name__ == '__main__':
-    _test_fnn()

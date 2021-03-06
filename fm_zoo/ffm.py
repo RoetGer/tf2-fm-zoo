@@ -31,14 +31,3 @@ class FieldAwareFactorizationMachine(tf.keras.Model):
             axis=(1, 2)
         ), axis=-1)
         return linear_out + interaction_out
-
-
-def _test_ffm():
-    x = tf.convert_to_tensor([[1, 2, 2], [0, 3, 2]], dtype='int32')
-    m = FieldAwareFactorizationMachine([3, 4, 5], 2)
-    o = m(x)
-    assert o.shape == (2, 1)
-
-
-if __name__ == '__main__':
-    _test_ffm()

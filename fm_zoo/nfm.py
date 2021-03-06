@@ -24,14 +24,3 @@ class NeuralFactorizationMachine(tf.keras.Model):
         pooled_interactions = square_of_sums - sum_of_squares
         interaction_out = self.nn(pooled_interactions, training=training)
         return linear_out + interaction_out
-
-
-def _test_nfm():
-    x = [[1, 2, 2], [0, 3, 2]]
-    m = NeuralFactorizationMachine([3, 4, 5], 2, [5, 3, 1], .1)
-    o = m(x)
-    assert o.shape == (2, 1)
-
-
-if __name__ == '__main__':
-    _test_nfm()

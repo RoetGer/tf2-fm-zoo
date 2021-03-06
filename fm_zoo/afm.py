@@ -41,14 +41,3 @@ class AttentionalFactorizationMachine(tf.keras.Model):
         interactions = tf.reduce_sum(interactions, axis=-1, keepdims=True)
         attended = tf.multiply(interactions, attention_scores)
         return self.linear(x) + tf.reduce_sum(attended, axis=1)
-
-
-def _test_afm():
-    x = tf.convert_to_tensor([[1, 2, 2, 1, 5], [0, 3, 2, 2, 4], [2, 2, 2, 1, 1]])
-    m = AttentionalFactorizationMachine([3, 4, 5, 4, 6], 4, 2)
-    o = m(x)
-    assert o.shape == (3, 1)
-
-
-if __name__ == '__main__':
-    _test_afm()

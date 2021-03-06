@@ -26,14 +26,3 @@ class FactorizationMachine(tf.keras.Model):
         square_of_sums = tf.pow(tf.reduce_sum(factors, 1), 2)
         interaction_out = 0.5 * tf.reduce_sum(square_of_sums - sum_of_squares, 1, keepdims=True)
         return linear_out + interaction_out
-
-
-def _test_fm():
-    x = [[1, 2, 2], [0, 3, 2]]
-    m = FactorizationMachine([3, 4, 5], 2)
-    o = m(x)
-    assert o.shape == (2, 1)
-
-
-if __name__ == '__main__':
-    _test_fm()

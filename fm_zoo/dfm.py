@@ -29,14 +29,3 @@ class DeepFM(tf.keras.Model):
         features = self.flatten(factors)
         fnn_out = self.nn(features, training=training)
         return fm_out + fnn_out
-
-
-def _test_dfm():
-    x = [[1, 2, 2], [0, 3, 2]]
-    m = DeepFM([3, 4, 5], 2, [5, 3, 1], .1)
-    o = m(x)
-    assert o.shape == (2, 1)
-
-
-if __name__ == '__main__':
-    _test_dfm()

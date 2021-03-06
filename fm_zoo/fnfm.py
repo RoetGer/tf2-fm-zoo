@@ -33,14 +33,3 @@ class FieldAwareNeuralFactorizationMachine(tf.keras.Model):
         interaction_out = self.nn(interactions, training=training)
 
         return linear_out + interaction_out
-
-
-def _test_fnfm():
-    x = [[1, 2, 2], [0, 3, 2]]
-    m = FieldAwareNeuralFactorizationMachine([3, 4, 5], 2, [5, 3, 1], .1)
-    o = m(x)
-    assert o.shape == (2, 1)
-
-
-if __name__ == '__main__':
-    _test_fnfm()
