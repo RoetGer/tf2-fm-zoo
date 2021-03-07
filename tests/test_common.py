@@ -5,7 +5,7 @@ from fm_zoo.common import EmbedFeatures, FieldAwareEmbedFeatures, FullyConnected
 
 
 def test_linear_model():
-    x = tf.convert_to_tensor([[1, 2, 2], [0, 3, 2]], dtype='int32')
+    x = tf.convert_to_tensor([[1, 2, 2], [0, 3, 2]], dtype="int64")
     m = LinearModel([3, 4, 5])
     o = m(x)
     
@@ -13,7 +13,7 @@ def test_linear_model():
 
 
 def test_feature_embedding():
-    x = tf.convert_to_tensor([[1, 2, 2], [0, 3, 2]], dtype='int32')
+    x = tf.convert_to_tensor([[1, 2, 2], [0, 3, 2]], dtype="int64")
     m = EmbedFeatures([3, 4, 5], 2)
     o = m(x)
     
@@ -21,7 +21,7 @@ def test_feature_embedding():
 
 
 def test_field_aware_feature_embedding():
-    x = tf.convert_to_tensor([[1, 2, 2], [0, 3, 2]], dtype='int32')
+    x = tf.convert_to_tensor([[1, 2, 2], [0, 3, 2]], dtype="int64")
     m = FieldAwareEmbedFeatures([3, 4, 5], 2)
     o = m(x)
     

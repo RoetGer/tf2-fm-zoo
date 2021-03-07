@@ -5,7 +5,7 @@ from fm_zoo.ffm import FieldAwareFactorizationMachine
 
 
 def test_ffm():
-    x = tf.convert_to_tensor([[1, 2, 2], [0, 3, 2]], dtype='int32')
+    x = tf.convert_to_tensor([[1, 2, 2], [0, 3, 2]], dtype="int64")
     m = FieldAwareFactorizationMachine([3, 4, 5], 2)
     o = m(x)
     
