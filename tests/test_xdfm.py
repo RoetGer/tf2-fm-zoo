@@ -17,4 +17,4 @@ def test_xdfm():
     m = ExtremeDeepFactorizationMachine([3, 4, 5, 4, 6], 4, [20, 10, 1], [10, 5], .1, False)
     o = m(x)
     
-    assert o.shape == (32, 1)
+    assert o.shape == (3, 1)
