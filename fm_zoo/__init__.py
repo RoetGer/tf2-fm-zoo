@@ -20,12 +20,12 @@ for module_name in modules:
     
 
 # Expose some of the models directly
-from afi import AutomaticFeatureInteraction
-from afm import AttentionalFactorizationMachine 
-from dfm import DeepFM
-from fm import FactorizationMachine
-from fnfm import FieldAwareNeuralFactorizationMachine
-from fnn import FMNeuralNetwork
-from nfm import NeuralFactorizationMachine
-from xdfm import CompressedInteractionNetwork, ExtremeDeepFactorizationMachine
-from ffm import FieldAwareFactorizationMachine
+from .afi import AutomaticFeatureInteraction
+from .afm import AttentionalFactorizationMachine 
+from .dfm import DeepFM
+from .fm import FactorizationMachine
+from .fnfm import FieldAwareNeuralFactorizationMachine
+from .fnn import FMNeuralNetwork
+from .nfm import NeuralFactorizationMachine
+from .xdfm import CompressedInteractionNetwork, ExtremeDeepFactorizationMachine
+from .ffm import FieldAwareFactorizationMachine
