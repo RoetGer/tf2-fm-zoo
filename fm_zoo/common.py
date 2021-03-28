@@ -9,7 +9,8 @@ class LinearModel(tf.keras.Model):
     """
     def __init__(self, feature_cards, name='linear_model'):
         super(LinearModel, self).__init__(name=name)
-        self.bias = tf.random.uniform((1,))
+        self.bias = self.add_weight(
+            shape=(1,), initializer='random_normal', trainable=True)
         self.linear = tf.keras.layers.Embedding(input_dim=sum(feature_cards), output_dim=1)
         self.offsets = tf.constant(np.concatenate(([0], np.cumsum(feature_cards)[:-1])), dtype='int64')
 
