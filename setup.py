@@ -9,7 +9,7 @@ with open(osp.join(rep_folder, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="tf2_fm_zoo",
-    version="0.1.2",
+    version="0.2.0",
     url="https://github.com/RoetGer/tf2-fm-zoo",
     packages=find_packages(include=["fm_zoo"]),
     long_description=long_description, 
