@@ -7,15 +7,27 @@ class LinearModel(tf.keras.Model):
 
     The input to this module is the same as the EmbedFeatures module, see that part for detail.
     """
-    def __init__(self, feature_cards, name='linear_model'):
+    def __init__(self, feature_cards, prior=None, name='linear_model'):
         super(LinearModel, self).__init__(name=name)
         self.bias = self.add_weight(
             shape=(1,), initializer='random_normal', trainable=True)
         self.linear = tf.keras.layers.Embedding(input_dim=sum(feature_cards), output_dim=1)
         self.offsets = tf.constant(np.concatenate(([0], np.cumsum(feature_cards)[:-1])), dtype='int64')
 
+        if prior:
+            self.prior = prior
+
     def call(self, x, training=False):
         x = x + tf.stop_gradient(self.offsets)
+        
+        if self.prior:
+            neg_prior = - tf.reduce_sum(
+                self.prior.log_prob(
+                    self.linear.embeddings)
+            )
+
+            self.add_loss(neg_prior)
+        
         return self.bias + tf.reduce_sum(self.linear(x), axis=1)
 
 
@@ -38,14 +50,26 @@ class EmbedFeatures(tf.keras.Model):
         (male, master, 26) encoded as [1, 2, 2]
         (female, phd, 35) encoded as [0, 3, 2]
     """
-    def __init__(self, feature_cards, factor_dim, name='embedding'):
+    def __init__(self, feature_cards, factor_dim, prior=None, name='embedding'):
         super(EmbedFeatures, self).__init__(name=name)
         self.embedding = tf.keras.layers.Embedding(input_dim=sum(feature_cards), output_dim=factor_dim)
         self.offsets = tf.constant(np.concatenate(([0], np.cumsum(feature_cards)[:-1])), dtype='int64')
 
+        if prior:
+            self.prior = prior
+
     def call(self, x, training=False):
         x = x + tf.stop_gradient(self.offsets)
         embedded = self.embedding(x)
+        
+        if self.prior:
+            neg_prior = - tf.reduce_sum(
+                self.prior.log_prob(
+                    self.embedding.embeddings)
+            )
+
+            self.add_loss(neg_prior)
+        
         return embedded
 
 
@@ -54,7 +78,7 @@ class FieldAwareEmbedFeatures(tf.keras.Model):
 
     To get the ith feature's jth factor of example k in the batch, we would do: embedded[k, i, j, :]
     """
-    def __init__(self, feature_cards, factor_dim, name='embedding'):
+    def __init__(self, feature_cards, factor_dim, prior=None, name='embedding'):
         super(FieldAwareEmbedFeatures, self).__init__(name=name)
         self.num_features = len(feature_cards)
         self.embeddings = [
@@ -62,10 +86,22 @@ class FieldAwareEmbedFeatures(tf.keras.Model):
             for i in range(self.num_features)
         ]
         self.offsets = tf.constant(np.concatenate(([0], np.cumsum(feature_cards)[:-1])), dtype='int64')
+        
+        self.prior = prior
 
     def call(self, x, training=False):
         x = x + tf.stop_gradient(self.offsets)
         embeddings = [tf.expand_dims(embedding(x), 2) for embedding in self.embeddings]
+        
+        if self.prior:
+            neg_prior = - tf.reduce_sum([
+                tf.reduce_sum(
+                    self.prior.log_prob(embed)
+                for embed in embeddings
+            ])
+
+            self.add_loss(neg_prior)
+        
         return tf.concat(embeddings, 2)
 
 

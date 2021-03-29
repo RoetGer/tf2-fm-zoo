@@ -49,10 +49,10 @@ class ExtremeDeepFactorizationMachine(tf.keras.Model):
     reference: https://arxiv.org/abs/1803.05170
     """
     def __init__(self, feature_cards, factor_dim, fnn_hidden_sizes, cin_hidden_sizes, dropout_rate=.1, split=True,
-                 name='xdeepfm'):
+                 prior=None, name='xdeepfm'):
         super(ExtremeDeepFactorizationMachine, self).__init__(name=name)
-        self.linear = LinearModel(feature_cards, name=name + '/linear_model')
-        self.embedding = EmbedFeatures(feature_cards, factor_dim, name=name + '/feature_embedding')
+        self.linear = LinearModel(feature_cards, prior=prior, name=name + '/linear_model')
+        self.embedding = EmbedFeatures(feature_cards, factor_dim, prior=prior, name=name + '/feature_embedding')
         self.flatten = tf.keras.layers.Flatten(data_format='channels_first')
         self.nn = FullyConnectedNetwork(units=fnn_hidden_sizes, dropout_rate=dropout_rate, name=name + '/fcn')
         self.cin = CompressedInteractionNetwork(cin_hidden_sizes, split, name=name + '/cin')

@@ -10,10 +10,10 @@ class NeuralFactorizationMachine(tf.keras.Model):
     Contrast to FNN, the fully connected network takes in the pooled pairwise interactions, and the model keeps the
     linear part.
     """
-    def __init__(self, feature_cards, factor_dim, hidden_sizes, dropout_rate=.1, name='neural_factorization_machine'):
+    def __init__(self, feature_cards, factor_dim, hidden_sizes, dropout_rate=.1, prior=None, name='neural_factorization_machine'):
         super(NeuralFactorizationMachine, self).__init__(name=name)
-        self.embedding = EmbedFeatures(feature_cards, factor_dim, name=name + '/feature_embedding')
-        self.linear = LinearModel(feature_cards, name=name + '/linear_model')
+        self.embedding = EmbedFeatures(feature_cards, factor_dim, prior=prior, name=name + '/feature_embedding')
+        self.linear = LinearModel(feature_cards, prior=prior, name=name + '/linear_model')
         self.nn = FullyConnectedNetwork(units=hidden_sizes, dropout_rate=dropout_rate, name=name + '/fcn')
 
     def call(self, x, training=False):

@@ -9,12 +9,12 @@ class FieldAwareNeuralFactorizationMachine(tf.keras.Model):
 
     extend nfm to operate on field aware interactions
     """
-    def __init__(self, feature_cards, factor_dim, hidden_sizes, dropout_rate=.1, name='fnfm'):
+    def __init__(self, feature_cards, factor_dim, hidden_sizes, dropout_rate=.1, prior=None, name='fnfm'):
         super(FieldAwareNeuralFactorizationMachine, self).__init__(name=name)
         self.num_features = len(feature_cards)
-        self.embeddings = FieldAwareEmbedFeatures(feature_cards, factor_dim,
+        self.embeddings = FieldAwareEmbedFeatures(feature_cards, factor_dim, prior=prior,
                                                   name=name + '/field_aware_feature_embedding')
-        self.linear = LinearModel(feature_cards, name=name + '/linear_model')
+        self.linear = LinearModel(feature_cards, prior=prior, name=name + '/linear_model')
         self.nn = FullyConnectedNetwork(units=hidden_sizes, dropout_rate=dropout_rate, name=name + '/fcn')
 
     def call(self, x, training=False):

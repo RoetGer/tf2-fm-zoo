@@ -9,12 +9,12 @@ class AttentionalFactorizationMachine(tf.keras.Model):
 
     It adds an attention network on the pairwise interactions of FM.
     """
-    def __init__(self, feature_cards, factor_dim, attention_size, name='afm'):
+    def __init__(self, feature_cards, factor_dim, attention_size, prior=None, name='afm'):
         super(AttentionalFactorizationMachine, self).__init__(name=name)
         self.num_features = len(feature_cards)
         self.factor_dim = factor_dim
-        self.linear = LinearModel(feature_cards, name=name + '/linear_model')
-        self.embedding = EmbedFeatures(feature_cards, factor_dim, name=name + '/feature_embedding')
+        self.linear = LinearModel(feature_cards, prior=prior, name=name + '/linear_model')
+        self.embedding = EmbedFeatures(feature_cards, factor_dim, prior=prior, name=name + '/feature_embedding')
         self.attention = tf.keras.Sequential([
             tf.keras.layers.Dense(units=attention_size, name=name + '/attention_hidden'),
             tf.keras.layers.ReLU(name=name + '/attention_activ'),

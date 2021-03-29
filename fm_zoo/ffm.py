@@ -13,12 +13,12 @@ class FieldAwareFactorizationMachine(tf.keras.Model):
     The implementation here is doing element wise matrix multiplication and set lower triangle and diagnol to 0, to
     drop duplicate and self interaction before the sum pooling.
     """
-    def __init__(self, feature_cards, factor_dim, name='ffm'):
+    def __init__(self, feature_cards, factor_dim, prior=None, name='ffm'):
         super(FieldAwareFactorizationMachine, self).__init__(name=name)
         self.factor_dim = factor_dim
-        self.embeddings = FieldAwareEmbedFeatures(feature_cards, factor_dim,
+        self.embeddings = FieldAwareEmbedFeatures(feature_cards, factor_dim, prior=prior,
                                                   name=name + '/field_aware_feature_embeddings')
-        self.linear = LinearModel(feature_cards, name=name + '/linear_model')
+        self.linear = LinearModel(feature_cards, prior=prior, name=name + '/linear_model')
 
     def call(self, x, training=False):
         batch_size, factor_dim = int(tf.shape(x)[0]), self.factor_dim
