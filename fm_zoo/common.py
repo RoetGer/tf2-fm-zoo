@@ -20,6 +20,8 @@ class LinearModel(tf.keras.Model):
     def call(self, x, training=False):
         x = x + tf.stop_gradient(self.offsets)
         
+        res = self.bias + tf.reduce_sum(self.linear(x), axis=1)
+        
         if self.prior:
             neg_prior = - tf.reduce_sum(
                 self.prior.log_prob(
@@ -28,7 +30,7 @@ class LinearModel(tf.keras.Model):
 
             self.add_loss(neg_prior)
         
-        return self.bias + tf.reduce_sum(self.linear(x), axis=1)
+        return res
 
 
 class EmbedFeatures(tf.keras.Model):
